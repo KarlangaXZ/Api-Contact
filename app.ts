@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:4224/api/contacts";
 
-// Definir la interfaz para un contacto
+
 interface Contact {
   id?: number;
   name: string;
@@ -8,7 +8,7 @@ interface Contact {
   email: string;
 }
 
-// API - Obtener contactos
+// API 
 async function getContacts(): Promise<void> {
   const response = await fetch(API_URL);
   const contacts_user: Contact[] = await response.json();
@@ -41,7 +41,7 @@ async function getContacts(): Promise<void> {
   });
 }
 
-// Agregar contacto
+// Add
 async function postContact(contact: Contact): Promise<void> {
   await fetch(API_URL, {
     method: "POST",
@@ -53,7 +53,7 @@ async function postContact(contact: Contact): Promise<void> {
   getContacts();
 }
 
-// Eliminar contacto
+// Delete
 async function deleteContact(id: number): Promise<void> {
   await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
@@ -61,7 +61,7 @@ async function deleteContact(id: number): Promise<void> {
   getContacts();
 }
 
-// Editar contacto
+// Edit
 async function editContact(id: number): Promise<void> {
   const response = await fetch(`${API_URL}/${id}`);
   const contact: Contact = await response.json();
@@ -84,7 +84,6 @@ async function editContact(id: number): Promise<void> {
     return;
   }
 
-  // Asignar los valores correctamente
   contactId.value = contact.id?.toString() || "";
   contactName.value = contact.name;
   contactPhone.value = contact.phoneNumber;
@@ -111,7 +110,6 @@ if (contactForm) {
     };
 
     if (id) {
-      // Si hay un ID, es una edición
       await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         headers: {
@@ -120,21 +118,16 @@ if (contactForm) {
         body: JSON.stringify(contact),
       });
     } else {
-      // Si no hay ID, es un nuevo contacto
       await postContact(contact);
     }
-
-    // Limpiar el formulario
     contactForm.reset();
     const contactIdField = document.getElementById(
       "contactId"
     ) as HTMLInputElement | null;
     if (contactIdField) {
-      contactIdField.value = ""; // Limpiar el campo ID
+      contactIdField.value = "";
     }
     getContacts();
   });
-
-  // Cargar los contactos al iniciar
   getContacts();
 }
