@@ -32,7 +32,7 @@ This project is a phonebook management system built with TypeScript, Node.js, Ex
    
 2. **Install dependencies**:
    ```cd phonebook-api
-      npm install
+      npm install dev
    
 3. **Run the API**:
    ```npm run dev
